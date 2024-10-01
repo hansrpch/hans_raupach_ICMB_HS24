@@ -1,0 +1,10 @@
+---
+title: "Assignment 1"
+author: "Hans Raupach"
+---
+
+In this **introductory** assignment, I just want you to make a simple plot. Here is an example:
+
+```{r}
+1+1
+```

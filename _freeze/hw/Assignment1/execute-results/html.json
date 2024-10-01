@@ -1,0 +1,15 @@
+{
+  "hash": "6eba1ddbcbe771938c7a5b23154b0b3e",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Assignment 1\"\nauthor: \"Hans Raupach\"\n---\n\n\n\nIn this **introductory** assignment, I just want you to make a simple plot. Here is an example:\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1+1\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1] 2\n```\n\n\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
