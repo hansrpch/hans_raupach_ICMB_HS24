@@ -1,0 +1,90 @@
+---
+title: "Assignment 2"
+author: "Hans Raupach"
+---
+
+1.  Create normal distribution
+
+```{r}
+N <- 5000 # 5000 actors in the population
+MU <- 100 # mean wealth = 100
+dis <- rnorm(N, mean = MU, sd = MU/5)
+```
+
+2.  Calculate Gini coefficient
+
+```{r}
+y <- sort(dis) # sort dis vector for the Gini coefficient 
+n <- length(y) # n = number of observations in vector y
+for(i in n) {    
+  numer <- 2 * sum((1:i) * y)
+}
+denom <- n * sum(y)
+gini <- (numer / denom) - ((n + 1) / n)
+```
+
+3.  Create a histogram
+
+```{r}
+hist(dis, xlab = "wealth", ylab = "count", breaks = 30, xlim = c(0, 200))
+```
+
+4.  Create transaction function: random split (ChatGPT supported)
+
+```{r}
+random_split <- function(A, B) {
+  # Gesamtbetrag im Topf
+  pot <- A + B
+  
+  # Zufällige Aufteilung des Topfes
+  share <- runif(1, 0, pot) # 1 Zufallszahl erzeugen, 0 = Minimum, pot = Maximum
+  
+  # Rückgabe der beiden Anteile
+  return(c(share, pot - share))
+}
+random_split(100, 100)
+```
+
+5.  Create interaction function (ChatGPT supported)
+
+```{r}
+anyone <- function(N) {
+  return(sample(1:N, 2))  # Nimmt 2 zufällige, eindeutige Zahlen aus 1 bis N
+}
+
+# My initial idea: sample(length(y), 2) # random sample from the distribution (index number)
+```
+
+6.  Simulation (ChatGPT supported, still doesn't work)
+
+```{r}
+# Funktion zum Durchführen einer Transaktion
+step <- function(dis, transaction = random_split, interaction = anyone) {
+  # Zwei zufällige Individuen in der Population auswählen
+  indices <- interaction(length(dis))
+  i <- indices[1]
+  j <- indices[2]
+  
+  # Transaktion zwischen den beiden Individuen durchführen
+  dis[c(i, j)] <- transaction(dis[i], dis[j])
+  
+  return(dis)
+}
+
+# Funktion zur Simulation der Population
+simulate <- function(dis, T, step = step, transaction = random_split, interaction = anyone) {
+  # Kopiere die Population, um das Original nicht zu verändern
+  dis <- dis
+  
+  # Die Anfangspopulation ausgeben
+  populations <- list(dis)
+  
+  # Schleife für T Schritte
+  for (t in seq_len(T)) {
+    dis <- step(dis, transaction, interaction)
+    populations[[t + 1]] <- dis  # Speichere die Population nach jedem Schritt
+  }
+  
+  return(populations)
+}
+```

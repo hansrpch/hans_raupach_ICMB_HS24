@@ -1,0 +1,15 @@
+{
+  "hash": "20142f912f7c6a45bcb13103d83fd632",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Assignment 2\"\nauthor: \"Hans Raupach\"\n---\n\n\n\n1.  Create normal distribution\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nN <- 5000 # 5000 actors in the population\nMU <- 100 # mean wealth = 100\ndis <- rnorm(N, mean = MU, sd = MU/5)\n```\n:::\n\n\n\n2.  Calculate Gini coefficient\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\ny <- sort(dis) # sort dis vector for the Gini coefficient \nn <- length(y) # n = number of observations in vector y\nfor(i in n) {    \n  numer <- 2 * sum((1:i) * y)\n}\ndenom <- n * sum(y)\ngini <- (numer / denom) - ((n + 1) / n)\n```\n:::\n\n\n\n3.  Create a histogram\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nhist(dis, xlab = \"wealth\", ylab = \"count\", breaks = 30, xlim = c(0, 200))\n```\n\n::: {.cell-output-display}\n![](hw2_files/figure-html/unnamed-chunk-3-1.png){width=672}\n:::\n:::\n\n\n\n4.  Create transaction function: random split (ChatGPT supported)\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nrandom_split <- function(A, B) {\n  # Gesamtbetrag im Topf\n  pot <- A + B\n  \n  # Zufällige Aufteilung des Topfes\n  share <- runif(1, 0, pot) # 1 Zufallszahl erzeugen, 0 = Minimum, pot = Maximum\n  \n  # Rückgabe der beiden Anteile\n  return(c(share, pot - share))\n}\nrandom_split(100, 100)\n```\n\n::: {.cell-output .cell-output-stdout}\n\n```\n[1]   1.437338 198.562662\n```\n\n\n:::\n:::\n\n\n\n5.  Create interaction function (ChatGPT supported)\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\nanyone <- function(N) {\n  return(sample(1:N, 2))  # Nimmt 2 zufällige, eindeutige Zahlen aus 1 bis N\n}\n\n# My initial idea: sample(length(y), 2) # random sample from the distribution (index number)\n```\n:::\n\n\n\n6.  Simulation (ChatGPT supported, still doesn't work)\n\n\n\n::: {.cell}\n\n```{.r .cell-code}\n# Funktion zum Durchführen einer Transaktion\nstep <- function(dis, transaction = random_split, interaction = anyone) {\n  # Zwei zufällige Individuen in der Population auswählen\n  indices <- interaction(length(dis))\n  i <- indices[1]\n  j <- indices[2]\n  \n  # Transaktion zwischen den beiden Individuen durchführen\n  dis[c(i, j)] <- transaction(dis[i], dis[j])\n  \n  return(dis)\n}\n\n# Funktion zur Simulation der Population\nsimulate <- function(dis, T, step = step, transaction = random_split, interaction = anyone) {\n  # Kopiere die Population, um das Original nicht zu verändern\n  dis <- dis\n  \n  # Die Anfangspopulation ausgeben\n  populations <- list(dis)\n  \n  # Schleife für T Schritte\n  for (t in seq_len(T)) {\n    dis <- step(dis, transaction, interaction)\n    populations[[t + 1]] <- dis  # Speichere die Population nach jedem Schritt\n  }\n  \n  return(populations)\n}\n```\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

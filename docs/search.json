@@ -34,5 +34,16 @@
       "About",
       "hans_raupach_ICMB_HS24"
     ]
+  },
+  {
+    "objectID": "hw2/hw2.html",
+    "href": "hw2/hw2.html",
+    "title": "Assignment 2",
+    "section": "",
+    "text": "Create normal distribution\n\n\n\nCode\nN &lt;- 5000 # 5000 actors in the population\nMU &lt;- 100 # mean wealth = 100\ndis &lt;- rnorm(N, mean = MU, sd = MU/5)\n\n\n\nCalculate Gini coefficient\n\n\n\nCode\ny &lt;- sort(dis) # sort dis vector for the Gini coefficient \nn &lt;- length(y) # n = number of observations in vector y\nfor(i in n) {    \n  numer &lt;- 2 * sum((1:i) * y)\n}\ndenom &lt;- n * sum(y)\ngini &lt;- (numer / denom) - ((n + 1) / n)\n\n\n\nCreate a histogram\n\n\n\nCode\nhist(dis, xlab = \"wealth\", ylab = \"count\", breaks = 30, xlim = c(0, 200))\n\n\n\n\n\n\n\n\n\n\nCreate transaction function: random split (ChatGPT supported)\n\n\n\nCode\nrandom_split &lt;- function(A, B) {\n  # Gesamtbetrag im Topf\n  pot &lt;- A + B\n  \n  # Zufällige Aufteilung des Topfes\n  share &lt;- runif(1, 0, pot) # 1 Zufallszahl erzeugen, 0 = Minimum, pot = Maximum\n  \n  # Rückgabe der beiden Anteile\n  return(c(share, pot - share))\n}\nrandom_split(100, 100)\n\n\n[1]   1.437338 198.562662\n\n\n\nCreate interaction function (ChatGPT supported)\n\n\n\nCode\nanyone &lt;- function(N) {\n  return(sample(1:N, 2))  # Nimmt 2 zufällige, eindeutige Zahlen aus 1 bis N\n}\n\n# My initial idea: sample(length(y), 2) # random sample from the distribution (index number)\n\n\n\nSimulation (ChatGPT supported, still doesn’t work)\n\n\n\nCode\n# Funktion zum Durchführen einer Transaktion\nstep &lt;- function(dis, transaction = random_split, interaction = anyone) {\n  # Zwei zufällige Individuen in der Population auswählen\n  indices &lt;- interaction(length(dis))\n  i &lt;- indices[1]\n  j &lt;- indices[2]\n  \n  # Transaktion zwischen den beiden Individuen durchführen\n  dis[c(i, j)] &lt;- transaction(dis[i], dis[j])\n  \n  return(dis)\n}\n\n# Funktion zur Simulation der Population\nsimulate &lt;- function(dis, T, step = step, transaction = random_split, interaction = anyone) {\n  # Kopiere die Population, um das Original nicht zu verändern\n  dis &lt;- dis\n  \n  # Die Anfangspopulation ausgeben\n  populations &lt;- list(dis)\n  \n  # Schleife für T Schritte\n  for (t in seq_len(T)) {\n    dis &lt;- step(dis, transaction, interaction)\n    populations[[t + 1]] &lt;- dis  # Speichere die Population nach jedem Schritt\n  }\n  \n  return(populations)\n}\n\n\n\n\n\n\n\n Back to top",
+    "crumbs": [
+      "About",
+      "Assignment 2"
+    ]
   }
 ]
