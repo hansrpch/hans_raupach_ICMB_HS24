@@ -1,17 +1,14 @@
 [
   {
-    "objectID": "hw/Assignment1.html",
-    "href": "hw/Assignment1.html",
-    "title": "Assignment 1",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "hans_raupach_ICMB_HS24",
     "section": "",
-    "text": "In this introductory assignment, I just want you to make a simple plot. Here is an example:\n\n\nCode\n1+1\n\n\n[1] 2\n\n\n\n\n\n\n\n Back to top"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "About this site\n\n\nCode\n1 + 1\n\n\n[1] 2\n\n\n\n\n\n\n\n Back to top"
+    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n\nCode\n1 + 1\n\n\n[1] 2\n\n\n\n\n\n\n\n Back to top",
+    "crumbs": [
+      "About",
+      "hans_raupach_ICMB_HS24"
+    ]
   },
   {
     "objectID": "hw1/index.html",
@@ -25,15 +22,11 @@
     ]
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "hans_raupach_ICMB_HS24",
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
     "section": "",
-    "text": "This is a Quarto website.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n\nCode\n1 + 1\n\n\n[1] 2\n\n\n\n\n\n\n\n Back to top",
-    "crumbs": [
-      "About",
-      "hans_raupach_ICMB_HS24"
-    ]
+    "text": "About this site\n\n\nCode\n1 + 1\n\n\n[1] 2\n\n\n\n\n\n\n\n Back to top"
   },
   {
     "objectID": "hw2/hw2.html",
