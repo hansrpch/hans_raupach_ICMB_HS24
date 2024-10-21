@@ -3,7 +3,7 @@ title: "Assignment 2"
 author: "Hans Raupach"
 ---
 
-1.  Create normal distribution
+**1. Create normal distribution**
 
 ```{r}
 N <- 5000 # 5000 actors in the population
@@ -11,25 +11,27 @@ MU <- 100 # mean wealth = 100
 dis <- rnorm(N, mean = MU, sd = MU/5)
 ```
 
-2.  Calculate Gini coefficient
+**2. Calculate Gini coefficient**
 
 ```{r}
-y <- sort(dis) # sort dis vector for the Gini coefficient 
-n <- length(y) # n = number of observations in vector y
-for(i in n) {    
-  numer <- 2 * sum((1:i) * y)
+gini <- function(dis) {
+  y <- sort(dis)  # sortiere die Verteilung
+  n <- length(y)  # Anzahl der Beobachtungen
+  numer <- sum((2 * (1:n) - n - 1) * y)
+  denom <- n * sum(y)
+  gini <- numer / denom  # Gini-Koeffizient
+  return(gini)
 }
-denom <- n * sum(y)
-gini <- (numer / denom) - ((n + 1) / n)
+
 ```
 
-3.  Create a histogram
+**3. Create a histogram of the initial distribution**
 
 ```{r}
 hist(dis, xlab = "wealth", ylab = "count", breaks = 30, xlim = c(0, 200))
 ```
 
-4.  Create transaction function: random split (ChatGPT supported)
+**4. Create transaction function: random split (ChatGPT supported)**
 
 ```{r}
 random_split <- function(A, B) {
@@ -45,7 +47,7 @@ random_split <- function(A, B) {
 random_split(100, 100)
 ```
 
-5.  Create interaction function (ChatGPT supported)
+**5. Create interaction function (ChatGPT supported)**
 
 ```{r}
 anyone <- function(N) {
@@ -55,36 +57,52 @@ anyone <- function(N) {
 # My initial idea: sample(length(y), 2) # random sample from the distribution (index number)
 ```
 
-6.  Simulation (ChatGPT supported, still doesn't work)
+**6. Simulation (with ChatGPT)**
 
 ```{r}
-# Funktion zum Durchführen einer Transaktion
 step <- function(dis, transaction = random_split, interaction = anyone) {
-  # Zwei zufällige Individuen in der Population auswählen
+  # Zwei zufällige Individuen auswählen
   indices <- interaction(length(dis))
   i <- indices[1]
   j <- indices[2]
   
-  # Transaktion zwischen den beiden Individuen durchführen
+  # Transaktion durchführen und neue Verteilung speichern
   dis[c(i, j)] <- transaction(dis[i], dis[j])
   
   return(dis)
 }
 
-# Funktion zur Simulation der Population
-simulate <- function(dis, T, step = step, transaction = random_split, interaction = anyone) {
-  # Kopiere die Population, um das Original nicht zu verändern
-  dis <- dis
-  
-  # Die Anfangspopulation ausgeben
-  populations <- list(dis)
+simulate <- function(dis, T, step_function = step, transaction = random_split, interaction = anyone) {
+  populations <- list(dis)  # Kopie der Population zu Beginn
   
   # Schleife für T Schritte
   for (t in seq_len(T)) {
-    dis <- step(dis, transaction, interaction)
-    populations[[t + 1]] <- dis  # Speichere die Population nach jedem Schritt
+    dis <- step_function(dis, transaction, interaction)
+    populations[[t + 1]] <- dis  # Speichert die Population nach jedem Schritt
   }
   
   return(populations)
 }
+
+
+T <- 10000  # Anzahl der Schritte
+result <- simulate(dis, T)
+
+gini_over_time <- sapply(result, gini)
+
+```
+
+**7. Plot of changing Gini coefficient (with ChatGPT)**
+
+```{r}
+# Plot des Gini-Koeffizienten über die Zeit
+plot(gini_over_time, type = "l", xlab = "Time", ylab = "Gini Coefficient", main = "Gini over Time")
+```
+
+**8. Plot of resulting distribution (with ChatGPT)**
+
+```{r}
+final_distribution <- result[[T + 1]]  # Verteilung nach T Schritten
+hist(final_distribution, xlab = "wealth", ylab = "count", breaks = 30, xlim = c(0, 500))
+
 ```
